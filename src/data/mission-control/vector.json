@@ -1,0 +1,86 @@
+{
+  "map": [
+    {
+      "id": "command-overview",
+      "module": "Command Overview",
+      "phase": "Core Bundle",
+      "owner": "Damascus",
+      "state": "Live",
+      "notes": "War Room, Agent Status, and Intel Feed online.",
+      "links": ["/"],
+      "dependencies": []
+    },
+    {
+      "id": "vector-build-status",
+      "module": "Vector Build Status",
+      "phase": "Phase 1",
+      "owner": "Vector",
+      "state": "Live",
+      "notes": "Build + Runtime boards wired to live sentinel data.",
+      "links": ["/"],
+      "dependencies": ["status-api"]
+    },
+    {
+      "id": "runtime-health",
+      "module": "System Health",
+      "phase": "Phase 1",
+      "owner": "Sentinel",
+      "state": "Live",
+      "notes": "Gateway, Automation Heartbeat, Webhooks, Deploy Drift cards shipping.",
+      "links": ["/system-health"],
+      "dependencies": ["sentinel-heartbeat", "deploy-monitor"]
+    },
+    {
+      "id": "command-console",
+      "module": "Command Console v1",
+      "phase": "Phase 2",
+      "owner": "Forge",
+      "state": "Blocked",
+      "notes": "Waiting on observability baseline sign-off.",
+      "links": ["/console"],
+      "dependencies": ["vector-observability"]
+    }
+  ],
+  "queue": [
+    {
+      "id": "status-api",
+      "title": "Status schema + API",
+      "owner": "Damascus",
+      "state": "Live",
+      "eta": "Shipped",
+      "notes": "Feeds Build/Runtime boards and sentinel cards."
+    },
+    {
+      "id": "deploy-monitor",
+      "title": "Deploy drift monitor",
+      "owner": "Vector",
+      "state": "Live",
+      "eta": "Shipped",
+      "notes": "Checks wheat alias vs local build every 5 min."
+    },
+    {
+      "id": "module-map",
+      "title": "Module Map polish",
+      "owner": "Vector",
+      "state": "In Progress",
+      "eta": "Today",
+      "notes": "Add owners + dependencies for each slice."
+    },
+    {
+      "id": "sentinel-heartbeat",
+      "title": "Sentinel heartbeat feed",
+      "owner": "Sentinel",
+      "state": "In Progress",
+      "eta": "Today",
+      "notes": "Gateway + cron monitors wired; webhook + drift live."
+    },
+    {
+      "id": "vector-observability",
+      "title": "Observability baseline complete",
+      "owner": "Vector",
+      "state": "In Progress",
+      "eta": "Today",
+      "notes": "Unlocks Command Console + Opportunity Scanner."
+    }
+  ]
+}

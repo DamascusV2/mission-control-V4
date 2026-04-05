@@ -1,0 +1,30 @@
+{
+  "summary": {
+    "total": 28,
+    "newToday": 6,
+    "priority": 9
+  },
+  "pipelines": [
+    {
+      "id": "roofing-hillsborough",
+      "name": "Hillsborough ≥12yr roofs",
+      "stage": "Scoring",
+      "leads": 14,
+      "next": "Validate owner contact"
+    },
+    {
+      "id": "roofing-pinellas",
+      "name": "Pinellas permit gaps",
+      "stage": "Research",
+      "leads": 7,
+      "next": "Confirm permit status"
+    },
+    {
+      "id": "commercial-ops",
+      "name": "Commercial reroof prospects",
+      "stage": "Ready",
+      "leads": 7,
+      "next": "Prep outreach pack"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+[
+  {"id":"desk-1","label":"Damascus","status":"coding","row":1,"col":2},
+  {"id":"desk-2","label":"Zay","status":"review","row":1,"col":4},
+  {"id":"desk-3","label":"Charlie","status":"building","row":2,"col":1},
+  {"id":"desk-4","label":"Violet","status":"research","row":2,"col":4},
+  {"id":"common","label":"Water Cooler","status":"collab","row":3,"col":3}
+]

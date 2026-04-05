@@ -1,0 +1,115 @@
+{
+  "releases": [
+    {
+      "id": "rel-20260320200332",
+      "timestamp": "2026-03-20T20:03:32.731Z",
+      "summary": "Vector board refresh",
+      "owner": "Damascus",
+      "artifact": "wheat-prod",
+      "notes": "Updated map + queue states"
+    },
+    {
+      "id": "rel-20260320174653",
+      "timestamp": "2026-03-20T17:46:53.347Z",
+      "summary": "Deploy drift monitor",
+      "owner": "Damascus",
+      "artifact": "wheat-prod",
+      "notes": "Compares wheat vs local build"
+    },
+    {
+      "id": "rel-20260320142858",
+      "timestamp": "2026-03-20T14:28:58.679Z",
+      "summary": "Webhook health wiring",
+      "owner": "Damascus",
+      "artifact": "wheat-prod",
+      "notes": "Adds Discord Webhooks card"
+    },
+    {
+      "id": "rel-20260320063358",
+      "timestamp": "2026-03-20T06:33:58.186Z",
+      "summary": "Cron heartbeat wiring",
+      "owner": "Damascus",
+      "artifact": "wheat-prod",
+      "notes": "Gateway+Cron cards live"
+    },
+    {
+      "id": "rel-20260320035011",
+      "timestamp": "2026-03-20T03:50:11.131Z",
+      "summary": "Gateway heartbeat wiring",
+      "owner": "Damascus",
+      "artifact": "wheat-prod",
+      "notes": "Adds live gateway card + logging"
+    },
+    {
+      "id": "rel-20260319130732",
+      "timestamp": "2026-03-19T13:07:32.617Z",
+      "summary": "Test release",
+      "owner": "Damascus",
+      "artifact": "wheat-prod",
+      "notes": "Automation logs webhook"
+    },
+    {
+      "id": "rel-20260317185831",
+      "timestamp": "2026-03-17T18:58:31.101Z",
+      "summary": "Highlight color tuning",
+      "owner": "Damascus",
+      "artifact": "wheat-prod",
+      "notes": "Brighter green / red warn / deeper blue"
+    },
+    {
+      "id": "rel-20260317185418",
+      "timestamp": "2026-03-17T18:54:18.095Z",
+      "summary": "UI accent tweaks",
+      "owner": "Damascus",
+      "artifact": "wheat-prod",
+      "notes": "Highlight colors updated"
+    },
+    {
+      "id": "rel-20260317183330",
+      "timestamp": "2026-03-17T18:33:30.199Z",
+      "summary": "Vector telemetry + release receipts",
+      "owner": "Damascus",
+      "artifact": "wheat-prod",
+      "notes": "Auto-generated via deploy:wheat"
+    },
+    {
+      "id": "rel-20260315-01",
+      "timestamp": "2026-03-15T19:35:00-04:00",
+      "summary": "Vector Build/Runtime status boards",
+      "owner": "Damascus",
+      "artifact": "mission-control-redeploy-20260315.zip",
+      "notes": "Pushed commit c4bec25 to wheat"
+    },
+    {
+      "id": "rel-20260315-02",
+      "timestamp": "2026-03-15T21:45:00-04:00",
+      "summary": "Module Map + Queue + vector API",
+      "owner": "Damascus",
+      "artifact": "mission-control-redeploy-20260315.zip",
+      "notes": "Commit 65cff5c"
+    }
+  ],
+  "automation": [
+    {
+      "id": "auto-001",
+      "timestamp": "2026-03-15T20:00:00-04:00",
+      "summary": "Hourly digest batching check",
+      "channel": "Cron",
+      "status": "OK"
+    },
+    {
+      "id": "auto-002",
+      "timestamp": "2026-03-15T18:30:00-04:00",
+      "summary": "Discord system-health preview",
+      "channel": "Relay",
+      "status": "Queued"
+    },
+    {
+      "id": "auto-003",
+      "timestamp": "2026-03-15T17:15:00-04:00",
+      "summary": "Camera stack snapshot",
+      "channel": "Sentinel",
+      "status": "OK"
+    }
+  ]
+}

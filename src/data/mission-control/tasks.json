@@ -1,0 +1,122 @@
+{
+  "activity": [
+    {
+      "id": "act-001",
+      "timestamp": "2026-03-07T14:20:00-05:00",
+      "summary": "Damascus pushed mission-control scaffold to workspace"
+    },
+    {
+      "id": "act-002",
+      "timestamp": "2026-03-07T14:32:00-05:00",
+      "summary": "Heartbeat: checked backlog for tasks assigned to Damascus"
+    },
+    {
+      "id": "act-003",
+      "timestamp": "2026-03-07T14:40:00-05:00",
+      "summary": "Zay enabled firewall + stealth mode"
+    }
+  ],
+  "columns": [
+    {
+      "id": "backlog",
+      "title": "Backlog",
+      "tasks": [
+        {
+          "id": "task-ops-001",
+          "title": "Document pipeline snapshot for ops board",
+          "owner": "Zay",
+          "ownerType": "human",
+          "description": "Outline current F3X initiatives, live deals, and automation priorities so Damascus can populate the ops board.",
+          "tags": ["ops", "inputs"],
+          "due": "2026-03-07",
+          "priority": "high",
+          "updatedAt": "2026-03-07T13:55:00-05:00"
+        },
+        {
+          "id": "task-ops-002",
+          "title": "Invite Damascus bot to HQ Discord general channel",
+          "owner": "Zay",
+          "ownerType": "human",
+          "description": "Add the OpenClaw bot to the general HQ channel so broadcast updates can post there.",
+          "tags": ["comms"],
+          "due": "2026-03-08",
+          "priority": "medium",
+          "updatedAt": "2026-03-07T09:30:00-05:00"
+        },
+        {
+          "id": "task-fb-001",
+          "title": "Automate Facebook session refresh",
+          "owner": "Damascus",
+          "ownerType": "agent",
+          "description": "Build a headless login flow (with 2FA backup code) that renews the Facebook cookie jar automatically so sweeps never lose access.",
+          "tags": ["facebook", "automation"],
+          "due": "2026-04-05",
+          "priority": "high",
+          "updatedAt": "2026-04-02T15:56:00-04:00"
+        }
+      ]
+    },
+    {
+      "id": "in-progress",
+      "title": "In Progress",
+      "tasks": [
+        {
+          "id": "task-mc-001",
+          "title": "Build mission control scaffold",
+          "owner": "Damascus",
+          "ownerType": "agent",
+          "description": "Next.js + Tailwind dashboard shell with sidebar and overview cards.",
+          "tags": ["mission-control", "frontend"],
+          "due": "2026-03-07",
+          "priority": "critical",
+          "updatedAt": "2026-03-07T15:25:00-05:00"
+        },
+        {
+          "id": "task-security-001",
+          "title": "Record firewall toggles in security report",
+          "owner": "Damascus",
+          "ownerType": "agent",
+          "description": "Update reports/security-2026-03-07.md with the firewall + stealth confirmation.",
+          "tags": ["security"],
+          "due": "2026-03-07",
+          "priority": "medium",
+          "updatedAt": "2026-03-07T15:10:00-05:00"
+        }
+      ]
+    },
+    {
+      "id": "review",
+      "title": "In Review",
+      "tasks": [
+        {
+          "id": "task-cam-001",
+          "title": "Dial camera presets",
+          "owner": "Damascus",
+          "ownerType": "agent",
+          "description": "Document instructions for camera capture + presets now that Insta360 controls are wired.",
+          "tags": ["camera", "docs"],
+          "due": "2026-03-08",
+          "priority": "medium",
+          "updatedAt": "2026-03-07T15:00:00-05:00"
+        }
+      ]
+    },
+    {
+      "id": "done",
+      "title": "Done",
+      "tasks": [
+        {
+          "id": "task-security-000",
+          "title": "Enable macOS firewall, logging, stealth",
+          "owner": "Zay",
+          "ownerType": "human",
+          "description": "Confirmed via socketfilterfw that firewall + stealth are on.",
+          "tags": ["security"],
+          "completedAt": "2026-03-07T14:45:00-05:00",
+          "priority": "high",
+          "updatedAt": "2026-03-07T14:45:00-05:00"
+        }
+      ]
+    }
+  ]
+}

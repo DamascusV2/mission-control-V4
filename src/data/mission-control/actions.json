@@ -1,0 +1,20 @@
+[
+  {
+    "id": "deploy",
+    "label": "Deploy latest War Room build",
+    "description": "Kick off the wheat deployment so the dashboard matches local",
+    "notes": "Runs Vercel deploy via CLI script"
+  },
+  {
+    "id": "system-health",
+    "label": "Trigger Discord system-health post",
+    "description": "Push Sentinel heartbeat summary into HQ",
+    "notes": "Uses existing webhook payload"
+  },
+  {
+    "id": "morning-brief",
+    "label": "Generate Morning Brief draft",
+    "description": "Produce the daily executive summary skeleton",
+    "notes": "Writes the draft to logs/notifier-log.jsonl"
+  }
+]

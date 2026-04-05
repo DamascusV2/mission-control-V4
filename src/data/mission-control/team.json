@@ -1,0 +1,42 @@
+{
+  "mission": "Build an autonomous operating system that compounds leverage for F3X Consulting.",
+  "principles": [
+    "Reverse prompt before building",
+    "Ship daily, automate weekly",
+    "Surface one proactive play per heartbeat"
+  ],
+  "agents": [
+    {
+      "id": "damascus",
+      "name": "Damascus",
+      "role": "Operator + Systems Strategist",
+      "location": "Mac mini (local)",
+      "focus": "Mission control, ops, automation",
+      "status": "online"
+    },
+    {
+      "id": "zay",
+      "name": "Zay",
+      "role": "Founder / Operator",
+      "location": "HQ",
+      "focus": "Vision, deals, execution",
+      "status": "mobile"
+    },
+    {
+      "id": "charlie",
+      "name": "Charlie",
+      "role": "Engineer sub-agent",
+      "location": "Mac Studio",
+      "focus": "Next.js tooling, infra",
+      "status": "standby"
+    },
+    {
+      "id": "violet",
+      "name": "Violet",
+      "role": "Research + Intel",
+      "location": "Claude",
+      "focus": "Market scanning, voice",
+      "status": "offline"
+    }
+  ]
+}

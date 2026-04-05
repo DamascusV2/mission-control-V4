@@ -1,0 +1,39 @@
+{
+  "name": "mission-control",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "generate:telemetry": "node ../scripts/mission-control/generate_status.js",
+    "telemetry:check": "node scripts/telemetry-check.mjs",
+    "vector:refresh": "node scripts/vector-refresh.mjs",
+    "deploy:wheat": "npm run generate:telemetry && npm run telemetry:check && npm run lint && npm run build",
+    "brief:run": "node scripts/morning-brief.mjs",
+    "heartbeat:ping": "node scripts/heartbeat-ping.mjs",
+    "opportunities:push": "node scripts/opportunity-push.mjs",
+    "automation:runner": "node scripts/automation-runner.mjs"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
+    "lucide-react": "^0.577.0",
+    "next": "16.1.6",
+    "node-cron": "^4.2.1",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "autoprefixer": "10.4.16",
+    "eslint": "^9",
+    "eslint-config-next": "16.1.6",
+    "postcss": "8.4.38",
+    "tailwindcss": "3.4.3",
+    "typescript": "^5"
+  }
+}

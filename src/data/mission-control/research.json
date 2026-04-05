@@ -1,0 +1,23 @@
+[
+  {
+    "id": "res-001",
+    "title": "Roofing Lead Engine – property dataset map",
+    "status": "draft",
+    "owner": "Damascus",
+    "next": "Ingest Hillsborough appraiser export"
+  },
+  {
+    "id": "res-002",
+    "title": "Contractor demand signals",
+    "status": "queued",
+    "owner": "Iris",
+    "next": "Collect agency job boards"
+  },
+  {
+    "id": "res-003",
+    "title": "Automation opportunity scan",
+    "status": "in-progress",
+    "owner": "Damascus",
+    "next": "Compile AI assistant demand list"
+  }
+]

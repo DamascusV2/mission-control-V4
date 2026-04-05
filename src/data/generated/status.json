@@ -1,0 +1,327 @@
+{
+  "generatedAt": "2026-04-05T23:04:24.658Z",
+  "systemHealth": [
+    {
+      "id": "gateway",
+      "label": "Gateway",
+      "detail": "Connect 36ms · 2026.4.2",
+      "status": "PASS",
+      "timestamp": "2026-04-05T23:04:24.658Z"
+    },
+    {
+      "id": "heartbeat",
+      "label": "Heartbeat",
+      "detail": "2 agents configured",
+      "status": "WARN",
+      "timestamp": "2026-04-05T23:04:24.658Z"
+    },
+    {
+      "id": "security",
+      "label": "Security",
+      "detail": "All clear",
+      "status": "PASS",
+      "timestamp": "2026-04-05T23:04:24.658Z"
+    }
+  ],
+  "agents": [
+    {
+      "id": "damascus",
+      "name": "Damascus",
+      "role": "Operator + Systems Strategist",
+      "focus": "Mission control, ops, automation",
+      "location": "Mac mini (local)",
+      "presence": "online",
+      "workload": "Light",
+      "lastUpdate": "2026-03-20T04:07:01.891Z"
+    },
+    {
+      "id": "zay",
+      "name": "Zay",
+      "role": "Founder / Operator",
+      "focus": "Vision, deals, execution",
+      "location": "HQ",
+      "presence": "mobile",
+      "workload": "Unknown",
+      "lastUpdate": null
+    },
+    {
+      "id": "charlie",
+      "name": "Charlie",
+      "role": "Engineer sub-agent",
+      "focus": "Next.js tooling, infra",
+      "location": "Mac Studio",
+      "presence": "standby",
+      "workload": "Unknown",
+      "lastUpdate": null
+    },
+    {
+      "id": "violet",
+      "name": "Violet",
+      "role": "Research + Intel",
+      "focus": "Market scanning, voice",
+      "location": "Claude",
+      "presence": "offline",
+      "workload": "Unknown",
+      "lastUpdate": null
+    }
+  ],
+  "activity": [
+    {
+      "id": "8b173d93-2bf3-474b-a2e2-e2724b2e7d72",
+      "timestamp": "2026-04-05T23:03:37.683Z",
+      "summary": "Direct session agent:main:discord:direct:1331671629163659387",
+      "owner": "main",
+      "tokens": 188607,
+      "percentUsed": 47
+    },
+    {
+      "id": "c0ede58d-d8a0-40f3-b986-0f1a91cb4ad0",
+      "timestamp": "2026-03-29T17:56:19.049Z",
+      "summary": "Direct session agent:main:main",
+      "owner": "main",
+      "tokens": null,
+      "percentUsed": null
+    },
+    {
+      "id": "30b85a88-629e-4dff-a177-0e664ae5d551",
+      "timestamp": "2026-03-28T17:05:54.986Z",
+      "summary": "Direct session agent:dm-lite:main",
+      "owner": "dm-lite",
+      "tokens": 10991,
+      "percentUsed": 1
+    },
+    {
+      "id": "f4028b02-0a83-4d27-8678-1715e7531a6f",
+      "timestamp": "2026-03-28T17:05:14.247Z",
+      "summary": "Direct session agent:main:subagent:739c468d-cc23-46cf-9374-ef77cf816833",
+      "owner": "main",
+      "tokens": 10496,
+      "percentUsed": 3
+    },
+    {
+      "id": "36c41fc6-a9b8-4f24-a88f-4ef39bd789d9",
+      "timestamp": "2026-03-26T20:01:30.039Z",
+      "summary": "group session agent:main:discord:channel:1479630894544322612",
+      "owner": "main",
+      "tokens": null,
+      "percentUsed": null
+    },
+    {
+      "id": "41d3b713-97bf-459a-a393-2e61e5e671ca",
+      "timestamp": "2026-03-21T03:04:26.220Z",
+      "summary": "group session agent:main:discord:channel:1483865083183366174",
+      "owner": "main",
+      "tokens": null,
+      "percentUsed": null
+    },
+    {
+      "id": "e93736a6-2743-48f0-9870-806d90c5d211",
+      "timestamp": "2026-03-20T14:41:01.459Z",
+      "summary": "group session agent:main:discord:channel:1479600519377981534",
+      "owner": "main",
+      "tokens": null,
+      "percentUsed": null
+    },
+    {
+      "id": "3ca3dfe7-1fd0-4455-af5f-347d5c773531",
+      "timestamp": "2026-03-20T04:07:01.891Z",
+      "summary": "group session agent:main:discord:channel:1480362152136151122",
+      "owner": "main",
+      "tokens": null,
+      "percentUsed": null
+    }
+  ],
+  "build": [
+    {
+      "id": "command-overview",
+      "name": "Command Overview",
+      "owner": "Damascus",
+      "state": "Live",
+      "updated": "2026-03-15T15:45:00-04:00",
+      "notes": "War Room bundle redeployed to Vercel wheat env.",
+      "blocker": null
+    },
+    {
+      "id": "intel-feed",
+      "name": "Intel Feed",
+      "owner": "Damascus",
+      "state": "Live",
+      "updated": "2026-03-15T15:45:00-04:00",
+      "notes": "Static data wired; awaiting Oracle ingestion.",
+      "blocker": "Oracle data contract"
+    },
+    {
+      "id": "system-health",
+      "name": "System Health",
+      "owner": "Damascus",
+      "state": "In Progress",
+      "updated": "2026-03-15T16:10:00-04:00",
+      "notes": "Preparing runtime hook for Sentinel feed.",
+      "blocker": null
+    },
+    {
+      "id": "vector-visibility",
+      "name": "Vector Visibility Stack",
+      "owner": "Vector",
+      "state": "Not Started",
+      "updated": "2026-03-15T16:30:00-04:00",
+      "notes": "Schema + API design underway.",
+      "blocker": null
+    },
+    {
+      "id": "opportunity-scanner",
+      "name": "Opportunity Scanner",
+      "owner": "Damascus",
+      "state": "Blocked",
+      "updated": "2026-03-15T14:00:00-04:00",
+      "notes": "Needs lead ingest sample before scoring logic can ship.",
+      "blocker": "Lead dataset from Pathfinder"
+    }
+  ],
+  "runtime": [
+    {
+      "id": "relay-discord",
+      "name": "Discord HQ Automation",
+      "owner": "Damascus",
+      "state": "In Progress",
+      "updated": "2026-03-15T13:55:00-04:00",
+      "notes": "Command/System Health channel feeds staged.",
+      "blocker": "Webhook credentials"
+    },
+    {
+      "id": "camera-stack",
+      "name": "Camera Stack",
+      "owner": "Sentinel",
+      "state": "Live",
+      "updated": "2026-03-15T12:30:00-04:00",
+      "notes": "Blue couch + AR wall presets ready; low-light fill pending.",
+      "blocker": null
+    },
+    {
+      "id": "cron-digests",
+      "name": "Hourly Digest + Model Tiering",
+      "owner": "Damascus",
+      "state": "In Progress",
+      "updated": "2026-03-15T11:45:00-04:00",
+      "notes": "Batching enforced locally; prod wiring next.",
+      "blocker": null
+    },
+    {
+      "id": "mission-001",
+      "name": "Mission 001 Roofing Engine",
+      "owner": "Pathfinder",
+      "state": "Not Started",
+      "updated": "2026-03-15T10:00:00-04:00",
+      "notes": "Requires lead ingest + scoring logic from Phase 2.",
+      "blocker": "Opportunity Scanner foundation"
+    }
+  ],
+  "vectorMap": [
+    {
+      "id": "command-overview",
+      "module": "Command Overview",
+      "phase": "Core Bundle",
+      "owner": "Damascus",
+      "state": "Live",
+      "notes": "War Room, Agent Status, and Intel Feed online.",
+      "links": [
+        "/"
+      ],
+      "dependencies": [],
+      "updated": "2026-04-05T02:20:56.880Z"
+    },
+    {
+      "id": "vector-build-status",
+      "module": "Vector Build Status",
+      "phase": "Phase 1",
+      "owner": "Vector",
+      "state": "Live",
+      "notes": "Build + Runtime boards wired to live sentinel data.",
+      "links": [
+        "/"
+      ],
+      "dependencies": [
+        "status-api"
+      ],
+      "updated": "2026-04-05T02:20:56.880Z"
+    },
+    {
+      "id": "runtime-health",
+      "module": "System Health",
+      "phase": "Phase 1",
+      "owner": "Sentinel",
+      "state": "Live",
+      "notes": "Gateway, Automation Heartbeat, Webhooks, Deploy Drift cards shipping.",
+      "links": [
+        "/system-health"
+      ],
+      "dependencies": [
+        "sentinel-heartbeat",
+        "deploy-monitor"
+      ],
+      "updated": "2026-04-05T02:20:56.880Z"
+    },
+    {
+      "id": "command-console",
+      "module": "Command Console v1",
+      "phase": "Phase 2",
+      "owner": "Forge",
+      "state": "Blocked",
+      "notes": "Waiting on observability baseline sign-off.",
+      "links": [
+        "/console"
+      ],
+      "dependencies": [
+        "vector-observability"
+      ],
+      "updated": "2026-04-05T02:20:56.880Z"
+    }
+  ],
+  "vectorQueue": [
+    {
+      "id": "status-api",
+      "title": "Status schema + API",
+      "owner": "Damascus",
+      "state": "Live",
+      "eta": "Shipped",
+      "notes": "Feeds Build/Runtime boards and sentinel cards.",
+      "updated": "2026-04-05T02:20:56.881Z"
+    },
+    {
+      "id": "deploy-monitor",
+      "title": "Deploy drift monitor",
+      "owner": "Vector",
+      "state": "Live",
+      "eta": "Shipped",
+      "notes": "Checks wheat alias vs local build every 5 min.",
+      "updated": "2026-04-05T02:20:56.881Z"
+    },
+    {
+      "id": "module-map",
+      "title": "Module Map polish",
+      "owner": "Vector",
+      "state": "In Progress",
+      "eta": "Today",
+      "notes": "Add owners + dependencies for each slice.",
+      "updated": "2026-04-05T02:20:56.881Z"
+    },
+    {
+      "id": "sentinel-heartbeat",
+      "title": "Sentinel heartbeat feed",
+      "owner": "Sentinel",
+      "state": "In Progress",
+      "eta": "Today",
+      "notes": "Gateway + cron monitors wired; webhook + drift live.",
+      "updated": "2026-04-05T02:20:56.881Z"
+    },
+    {
+      "id": "vector-observability",
+      "title": "Observability baseline complete",
+      "owner": "Vector",
+      "state": "In Progress",
+      "eta": "Today",
+      "notes": "Unlocks Command Console + Opportunity Scanner.",
+      "updated": "2026-04-05T02:20:56.881Z"
+    }
+  ]
+}

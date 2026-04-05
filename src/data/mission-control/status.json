@@ -1,0 +1,113 @@
+{
+  "build": [
+    {
+      "id": "command-overview",
+      "name": "Command Overview",
+      "owner": "Damascus",
+      "state": "Live",
+      "updated": "2026-03-15T15:45:00-04:00",
+      "notes": "War Room bundle redeployed to Vercel wheat env.",
+      "blocker": null
+    },
+    {
+      "id": "intel-feed",
+      "name": "Intel Feed",
+      "owner": "Damascus",
+      "state": "Live",
+      "updated": "2026-03-15T15:45:00-04:00",
+      "notes": "Static data wired; awaiting Oracle ingestion.",
+      "blocker": "Oracle data contract"
+    },
+    {
+      "id": "system-health",
+      "name": "System Health",
+      "owner": "Damascus",
+      "state": "In Progress",
+      "updated": "2026-03-15T16:10:00-04:00",
+      "notes": "Preparing runtime hook for Sentinel feed.",
+      "blocker": null
+    },
+    {
+      "id": "vector-visibility",
+      "name": "Vector Visibility Stack",
+      "owner": "Vector",
+      "state": "Not Started",
+      "updated": "2026-03-15T16:30:00-04:00",
+      "notes": "Schema + API design underway.",
+      "blocker": null
+    },
+    {
+      "id": "opportunity-scanner",
+      "name": "Opportunity Scanner",
+      "owner": "Damascus",
+      "state": "Blocked",
+      "updated": "2026-03-15T14:00:00-04:00",
+      "notes": "Needs lead ingest sample before scoring logic can ship.",
+      "blocker": "Lead dataset from Pathfinder"
+    }
+  ],
+  "runtime": [
+    {
+      "id": "relay-discord",
+      "name": "Discord HQ Automation",
+      "owner": "Damascus",
+      "state": "In Progress",
+      "updated": "2026-03-15T13:55:00-04:00",
+      "notes": "Command/System Health channel feeds staged.",
+      "blocker": "Webhook credentials"
+    },
+    {
+      "id": "camera-stack",
+      "name": "Camera Stack",
+      "owner": "Sentinel",
+      "state": "Live",
+      "updated": "2026-03-15T12:30:00-04:00",
+      "notes": "Blue couch + AR wall presets ready; low-light fill pending.",
+      "blocker": null
+    },
+    {
+      "id": "cron-digests",
+      "name": "Hourly Digest + Model Tiering",
+      "owner": "Damascus",
+      "state": "In Progress",
+      "updated": "2026-03-15T11:45:00-04:00",
+      "notes": "Batching enforced locally; prod wiring next.",
+      "blocker": null
+    },
+    {
+      "id": "mission-001",
+      "name": "Mission 001 Roofing Engine",
+      "owner": "Pathfinder",
+      "state": "Not Started",
+      "updated": "2026-03-15T10:00:00-04:00",
+      "notes": "Requires lead ingest + scoring logic from Phase 2.",
+      "blocker": "Opportunity Scanner foundation"
+    }
+  ],
+  "activity": [
+    {
+      "id": "act-016",
+      "timestamp": "2026-03-15T16:05:00-04:00",
+      "summary": "Mission Control redeployed to Vercel wheat env.",
+      "owner": "Damascus"
+    },
+    {
+      "id": "act-015",
+      "timestamp": "2026-03-15T15:40:00-04:00",
+      "summary": "Vector visibility schema drafted for Build/Runtime boards.",
+      "owner": "Damascus"
+    },
+    {
+      "id": "act-014",
+      "timestamp": "2026-03-15T15:05:00-04:00",
+      "summary": "Intel Feed + System Health UI verified locally.",
+      "owner": "Damascus"
+    },
+    {
+      "id": "act-013",
+      "timestamp": "2026-03-15T14:20:00-04:00",
+      "summary": "Hourly digest batching plan locked for GPT spend control.",
+      "owner": "Damascus"
+    }
+  ]
+}

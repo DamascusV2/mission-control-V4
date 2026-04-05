@@ -1,0 +1,36 @@
+[
+  {
+    "id": "mission-control",
+    "name": "Mission Control v1",
+    "description": "Custom dashboard + tools so Damascus can self-serve task/state reporting.",
+    "owner": "Damascus",
+    "status": 0.45,
+    "lastUpdated": "2026-03-07T15:25:00-05:00",
+    "links": [
+      { "label": "Spec", "href": "/docs/mission-control-spec" },
+      { "label": "Task Board", "href": "/task-board" }
+    ]
+  },
+  {
+    "id": "f3x-pipeline",
+    "name": "F3X Ops & Pipeline",
+    "description": "Track consulting leads, automation deployments, and recurring deliverables.",
+    "owner": "Zay",
+    "status": 0.3,
+    "lastUpdated": "2026-03-06T18:00:00-05:00",
+    "links": [
+      { "label": "Ops Board", "href": "/projects" }
+    ]
+  },
+  {
+    "id": "camera-stack",
+    "name": "Vision + Camera Stack",
+    "description": "Auto-capture presets (front door, AR wall, blue couch) + mission logs.",
+    "owner": "Damascus",
+    "status": 0.6,
+    "lastUpdated": "2026-03-07T14:40:00-05:00",
+    "links": [
+      { "label": "Camera Docs", "href": "/docs/camera/insta360" }
+    ]
+  }
+]

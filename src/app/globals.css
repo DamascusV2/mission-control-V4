@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --color-bg: #060816;
+  --color-surface: #0b1120;
+  --color-panel: #101827;
+  --color-border: rgba(114, 131, 155, 0.4);
+  --color-accent: #35D7FF;
+  --color-slate: #72839B;
+  --color-success: #16C784;
+  --color-amber: #FFB84D;
+  --color-danger: #FF5D73;
+  --color-text: #F4F7FF;
+}
+
+body {
+  @apply min-h-screen;
+  color: var(--color-text);
+  background: radial-gradient(circle at 15% 10%, rgba(53, 215, 255, 0.15), transparent 45%),
+              radial-gradient(circle at 75% 0%, rgba(114, 131, 155, 0.25), transparent 55%),
+              var(--color-bg);
+}
+
+.glass-card {
+  background: rgba(8, 12, 30, 0.78);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 30px 60px rgba(2, 4, 12, 0.65);
+  backdrop-filter: blur(22px);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1f2937;
+  border-radius: 999px;
+}
+
+@layer utilities {
+  .text-white\/80 { color: rgba(255, 255, 255, 0.8); }
+  .text-white\/70 { color: rgba(255, 255, 255, 0.7); }
+  .text-white\/60 { color: rgba(255, 255, 255, 0.6); }
+  .text-white\/50 { color: rgba(255, 255, 255, 0.5); }
+  .text-white\/40 { color: rgba(255, 255, 255, 0.4); }
+  .text-white\/30 { color: rgba(255, 255, 255, 0.3); }
+  .bg-white\/5 { background-color: rgba(255, 255, 255, 0.05); }
+  .bg-white\/10 { background-color: rgba(255, 255, 255, 0.1); }
+  .bg-panel\/80 { background-color: rgba(16, 19, 32, 0.8); }
+  .border-white\/5 { border-color: rgba(255, 255, 255, 0.05); }
+  .border-white\/10 { border-color: rgba(255, 255, 255, 0.1); }
+  .accent-border { border-color: var(--color-border); }
+  .accent-text { color: var(--color-accent); }
+  .accent-pill { background: rgba(53, 215, 255, 0.12); border-color: rgba(53, 215, 255, 0.45); }
+  .success-pill { background: rgba(22, 199, 132, 0.12); border-color: rgba(22, 199, 132, 0.4); }
+  .amber-pill { background: rgba(255, 184, 77, 0.12); border-color: rgba(255, 184, 77, 0.4); }
+  .danger-pill { background: rgba(255, 93, 115, 0.12); border-color: rgba(255, 93, 115, 0.35); }
+  .hover\:bg-white\/5:hover { background-color: rgba(255, 255, 255, 0.05); }
+}
