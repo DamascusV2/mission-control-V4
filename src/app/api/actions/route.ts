@@ -5,7 +5,15 @@ import { promisify } from "util";
 import { NextResponse } from "next/server";
 import actions from "../../../data/mission-control/actions.json";
 import { loadDeployments, loadStatus, loadTasks, loadVector } from "../../../lib/data";
-import type { StatusPayload } from "../../../types/mission-control";
+import type {
+  DeployPayload,
+  QueueItem,
+  StatusPayload,
+  Task,
+  TaskBoardData,
+  TaskColumn,
+  VectorPayload
+} from "../../../types/mission-control";
 import { sendDiscordMessage } from "../../../lib/discord";
 
 const workspaceRoot = path.resolve(process.cwd(), "..");
@@ -141,12 +149,23 @@ async function runServerlessAction(actionId: string) {
       await sendDiscordMessage("commanders-office", summary);
       return { stdout: summary };
     }
+    case "morning-brief": {
+      const payload = await buildServerlessMorningBrief();
+      await sendDiscordMessage("daily-intel", payload.discordMessage);
+      await sendDiscordMessage("automation-logs", `[QA] Morning Brief → posted (${new Date().toLocaleTimeString()})`);
+      return { stdout: payload.discordMessage };
+    }
     default:
       return { stderr: "Host-only quick action" };
   }
 }
 
-function buildMissionStatusSummary(status: StatusPayload, vector: any, deployments: any, tasks: any) {
+function buildMissionStatusSummary(
+  status: StatusPayload,
+  vector: VectorPayload,
+  deployments: DeployPayload,
+  tasks: TaskBoardData
+) {
   const now = new Date();
   const buildActive = (status.build ?? [])
     .filter((item) => ["Live", "In Progress"].includes(item.state))
@@ -154,24 +173,88 @@ function buildMissionStatusSummary(status: StatusPayload, vector: any, deploymen
   const runtimeIssues = (status.runtime ?? [])
     .filter((item) => item.state === "Blocked")
     .map((item) => `${item.name} → ${item.blocker ?? "attention"}`);
-  const vectorQueue = (vector.queue ?? []).filter((item: any) => item.state !== "Live").map((item: any) => `${item.title} (${item.owner})`);
-  const taskColumns = tasks.columns ?? [];
-  const inProgress = taskColumns.find((col: any) => col.id === "in-progress")?.tasks ?? [];
-  const backlog = taskColumns.find((col: any) => col.id === "backlog")?.tasks ?? [];
-  const done = taskColumns.find((col: any) => col.id === "done")?.tasks ?? [];
-  const completed = done.slice(-3).map((task: any) => `${task.title} (${task.owner})`);
-  const deploymentsLog = (deployments.releases ?? []).slice(-2).map((release: any) => `${release.summary} (${release.status ?? "OK"})`);
+  const vectorQueueItems: QueueItem[] = vector.queue ?? [];
+  const vectorQueue = vectorQueueItems.filter((item) => item.state !== "Live").map((item) => `${item.title} (${item.owner})`);
+  const taskColumns: TaskColumn[] = tasks.columns ?? [];
+  const inProgress: Task[] = taskColumns.find((col) => col.id === "in-progress")?.tasks ?? [];
+  const backlog: Task[] = taskColumns.find((col) => col.id === "backlog")?.tasks ?? [];
+  const done: Task[] = taskColumns.find((col) => col.id === "done")?.tasks ?? [];
+  const completed = done.slice(-3).map((task) => `${task.title} (${task.owner})`);
+  const deploymentsLog = (deployments.releases ?? []).slice(-2).map((release) => `${release.summary} (${release.status ?? "OK"})`);
 
   const formatLine = (label: string, list: string[], fallback = "None") => `• ${label}: ${list.length ? list.join(", ") : fallback}`;
   const lines = [
     formatLine("Active modules", buildActive),
-    formatLine("In progress", inProgress.map((task: any) => `${task.title} (${task.owner})`)),
+    formatLine("In progress", inProgress.map((task) => `${task.title} (${task.owner})`)),
     formatLine("Blocked", runtimeIssues),
-    formatLine("Backlog", backlog.slice(0, 3).map((task: any) => task.title)),
+    formatLine("Backlog", backlog.slice(0, 3).map((task) => task.title)),
     formatLine("Completed", completed),
     formatLine("Up next", vectorQueue.slice(0, 3)),
     formatLine("Deploys", deploymentsLog, "No recent deploys")
   ];
   const timestamp = now.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
   return `**Mission Status · ${timestamp} ET**\n${lines.join("\n")}`;
+}
+
+type NewsItem = { title: string; source?: string; url?: string };
+
+async function buildServerlessMorningBrief() {
+  const newsApiKey = process.env.NEWSAPI_API_KEY;
+  const finnhubKey = process.env.FINNHUB_API_KEY;
+  if (!newsApiKey || !finnhubKey) {
+    throw new Error("Missing NEWSAPI_API_KEY or FINNHUB_API_KEY for Morning Brief action");
+  }
+
+  const [globalNews, techNews, aiNews]: [NewsItem[], NewsItem[], NewsItem[]] = await Promise.all([
+    fetchNewsSlice({ category: "general", apiKey: newsApiKey }),
+    fetchNewsSlice({ category: "technology", apiKey: newsApiKey }),
+    fetchNewsSlice({ query: "\"artificial intelligence\" OR agents", apiKey: newsApiKey })
+  ]);
+
+  const [spy, qqq, btc] = await Promise.all([
+    fetchFinnhubQuote("SPY", finnhubKey, "SPY"),
+    fetchFinnhubQuote("QQQ", finnhubKey, "QQQ"),
+    fetchFinnhubQuote("BINANCE:BTCUSDT", finnhubKey, "BTC")
+  ]);
+
+  const highlightLines = [...globalNews.slice(0, 2), techNews[0], aiNews[0]]
+    .filter(Boolean)
+    .map((item) => `• ${item.title} (${item.source ?? "Unknown"})`)
+    .join("\n");
+  const marketsLine = `Markets → SPY ${formatDelta(spy)} | QQQ ${formatDelta(qqq)} | BTC ${formatDelta(btc)}`;
+  const timestamp = new Date().toLocaleString("en-US", { month: "short", day: "numeric" });
+  return {
+    discordMessage: `**Morning Brief · ${timestamp}**\n${highlightLines || "• No qualified headlines"}\n${marketsLine}`
+  };
+}
+
+async function fetchNewsSlice({ category, query, apiKey }: { category?: string; query?: string; apiKey: string }): Promise<NewsItem[]> {
+  const params = new URLSearchParams({ language: "en", pageSize: "5" });
+  if (category) params.set("category", category);
+  if (query) params.set("q", query);
+  params.set("from", new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString());
+  const endpoint = category ? "top-headlines" : "everything";
+  const response = await fetch(`https://newsapi.org/v2/${endpoint}?${params.toString()}`, {
+    headers: { "X-Api-Key": apiKey }
+  });
+  const payload = await response.json();
+  return (payload.articles ?? []).map((article: { title: string; source?: { name?: string }; url?: string }) => ({
+    title: article.title,
+    source: article.source?.name,
+    url: article.url
+  }));
+}
+
+async function fetchFinnhubQuote(symbol: string, token: string, label: string) {
+  const response = await fetch(`https://finnhub.io/api/v1/quote?symbol=${encodeURIComponent(symbol)}&token=${token}`);
+  const payload = await response.json();
+  return {
+    label,
+    percent: typeof payload.dp === "number" ? payload.dp : null
+  };
+}
+
+function formatDelta(quote: { label: string; percent: number | null }) {
+  if (quote.percent === null) return `${quote.label} n/a`;
+  return `${quote.label} ${quote.percent >= 0 ? "+" : ""}${quote.percent.toFixed(2)}%`;
 }
