@@ -4,7 +4,7 @@ import { exec as execCallback } from "child_process";
 import { promisify } from "util";
 import { NextResponse } from "next/server";
 import actions from "../../../data/mission-control/actions.json";
-import { loadStatus } from "../../../lib/data";
+import { loadDeployments, loadStatus, loadTasks, loadVector } from "../../../lib/data";
 import type { StatusPayload } from "../../../types/mission-control";
 import { sendDiscordMessage } from "../../../lib/discord";
 
@@ -132,7 +132,46 @@ async function runServerlessAction(actionId: string) {
       await sendDiscordMessage("action-required", `**System Health (serverless)**\n${summary}`);
       return { stdout: summary };
     }
+    case "mission-status": {
+      const status = loadStatus() as StatusPayload;
+      const vector = loadVector();
+      const deployments = loadDeployments();
+      const tasks = loadTasks();
+      const summary = buildMissionStatusSummary(status, vector, deployments, tasks);
+      await sendDiscordMessage("commanders-office", summary);
+      return { stdout: summary };
+    }
     default:
       return { stderr: "Host-only quick action" };
   }
+}
+
+function buildMissionStatusSummary(status: StatusPayload, vector: any, deployments: any, tasks: any) {
+  const now = new Date();
+  const buildActive = (status.build ?? [])
+    .filter((item) => ["Live", "In Progress"].includes(item.state))
+    .map((item) => `${item.name} (${item.owner})`);
+  const runtimeIssues = (status.runtime ?? [])
+    .filter((item) => item.state === "Blocked")
+    .map((item) => `${item.name} → ${item.blocker ?? "attention"}`);
+  const vectorQueue = (vector.queue ?? []).filter((item: any) => item.state !== "Live").map((item: any) => `${item.title} (${item.owner})`);
+  const taskColumns = tasks.columns ?? [];
+  const inProgress = taskColumns.find((col: any) => col.id === "in-progress")?.tasks ?? [];
+  const backlog = taskColumns.find((col: any) => col.id === "backlog")?.tasks ?? [];
+  const done = taskColumns.find((col: any) => col.id === "done")?.tasks ?? [];
+  const completed = done.slice(-3).map((task: any) => `${task.title} (${task.owner})`);
+  const deploymentsLog = (deployments.releases ?? []).slice(-2).map((release: any) => `${release.summary} (${release.status ?? "OK"})`);
+
+  const formatLine = (label: string, list: string[], fallback = "None") => `• ${label}: ${list.length ? list.join(", ") : fallback}`;
+  const lines = [
+    formatLine("Active modules", buildActive),
+    formatLine("In progress", inProgress.map((task: any) => `${task.title} (${task.owner})`)),
+    formatLine("Blocked", runtimeIssues),
+    formatLine("Backlog", backlog.slice(0, 3).map((task: any) => task.title)),
+    formatLine("Completed", completed),
+    formatLine("Up next", vectorQueue.slice(0, 3)),
+    formatLine("Deploys", deploymentsLog, "No recent deploys")
+  ];
+  const timestamp = now.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
+  return `**Mission Status · ${timestamp} ET**\n${lines.join("\n")}`;
 }

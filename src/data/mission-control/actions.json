@@ -16,5 +16,11 @@
     "label": "Generate Morning Brief draft",
     "description": "Produce the daily executive summary skeleton",
     "notes": "Writes the draft to logs/notifier-log.jsonl"
+  },
+  {
+    "id": "mission-status",
+    "label": "Post Mission Status Update",
+    "description": "Summarize active work, completed tasks, and outstanding items",
+    "notes": "Posts to commanders-office with current timestamps"
   }
 ]

@@ -52,7 +52,7 @@ async function fetchJson(url, headers = {}) {
   }
 }
 
-async function fetchNews({ query, category, pageSize = 5 }) {
+async function fetchNews({ query, category, pageSize = 6 }) {
   const params = new URLSearchParams({ language: "en", pageSize: String(pageSize) });
   if (query) params.set("q", query);
   if (category) params.set("category", category);
@@ -330,12 +330,12 @@ async function main() {
   fs.mkdirSync(markdownDir, { recursive: true });
 
   const [globalNews, techNews, aiNews, openAiNews, cryptoNews, stocksNews] = await Promise.all([
-    fetchNews({ category: "general", pageSize: 3 }),
-    fetchNews({ category: "technology", pageSize: 3 }),
-    fetchNews({ query: "\"artificial intelligence\" OR \"AI\"", pageSize: 3 }),
-    fetchNews({ query: "OpenAI OR Anthropic", pageSize: 3 }),
-    fetchNews({ query: "crypto OR bitcoin OR ethereum", pageSize: 3 }),
-    fetchNews({ query: "stocks OR market OR fed", pageSize: 3 })
+    fetchNews({ category: "general", pageSize: 5 }),
+    fetchNews({ category: "technology", pageSize: 5 }),
+    fetchNews({ query: "\"artificial intelligence\" OR \"AI\"", pageSize: 5 }),
+    fetchNews({ query: "OpenAI OR Anthropic", pageSize: 5 }),
+    fetchNews({ query: "crypto OR bitcoin OR ethereum", pageSize: 5 }),
+    fetchNews({ query: "stocks OR market OR fed", pageSize: 5 })
   ]);
 
   const [spx, ndx, btc, eth, rates] = await Promise.all([
@@ -386,7 +386,11 @@ async function main() {
   const headline = globalNews[0]?.title ?? "No major headline";
   const stockDelta = spx.percent ? `${spx.percent.toFixed(2)}%` : "n/a";
   const cryptoDelta = btc.percent ? `${btc.percent.toFixed(2)}%` : "n/a";
-  const discordMessage = `**Morning Brief · ${now.toLocaleDateString()}**\nHeadline: ${headline}\nStocks: SPY ${stockDelta} · Crypto: BTC ${cryptoDelta}\nArchive: ${briefFile}`;
+  const highlightLines = [globalNews[0], techNews[0], aiNews[0]]
+    .filter(Boolean)
+    .map((item) => `• ${item.title} (${item.source ?? "Unknown"})`)
+    .join("\n");
+  const discordMessage = `**Morning Brief · ${now.toLocaleDateString()}**\n${highlightLines || "• No major headlines"}\nMarkets → SPY ${stockDelta} | BTC ${cryptoDelta}\nArchive: ${briefFile}`;
   await postDailyIntel(discordMessage);
   logAutomation({
     id: `morning-brief-${now.toISOString()}`,
