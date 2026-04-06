@@ -11,6 +11,7 @@ const logDir = path.join(workspaceRoot, "logs", "actions");
 const projectRoot = process.cwd();
 const execAsync = promisify(execCallback);
 const missionLogDir = path.join(workspaceRoot, "logs", "mission-control");
+const scriptsDir = path.join(projectRoot, "scripts");
 
 function buildEntry(id: string) {
   const definition = actions.find((action) => action.id === id);
@@ -32,6 +33,7 @@ const actionHandlers: Record<string, () => Promise<unknown>> = {
 };
 
 function appendAutomationLog(payload: Record<string, unknown>) {
+  if (process.env.VERCEL) return;
   try {
     fs.mkdirSync(missionLogDir, { recursive: true });
     const timestamp = typeof payload.timestamp === "string" ? payload.timestamp : new Date().toISOString();
@@ -78,20 +80,30 @@ export async function POST(request: Request) {
     const handler = actionHandlers[body.action];
     let execResult: { stdout?: string; stderr?: string } | null = null;
     if (handler) {
-      execResult = (await handler()) as { stdout?: string; stderr?: string };
+      if (fs.existsSync(scriptsDir)) {
+        execResult = (await handler()) as { stdout?: string; stderr?: string };
+      } else {
+        execResult = { stderr: "Host-only quick action" };
+      }
     }
-    fs.mkdirSync(logDir, { recursive: true });
-    fs.appendFileSync(path.join(logDir, "actions.log"), `${JSON.stringify(entry)}\n`);
-    fs.writeFileSync(path.join(logDir, `${entry.id}-last.json`), JSON.stringify(entry, null, 2));
+    if (!process.env.VERCEL) {
+      fs.mkdirSync(logDir, { recursive: true });
+      fs.appendFileSync(path.join(logDir, "actions.log"), `${JSON.stringify(entry)}\n`);
+      fs.writeFileSync(path.join(logDir, `${entry.id}-last.json`), JSON.stringify(entry, null, 2));
+    }
     const execNote = execResult?.stdout?.trim() || execResult?.stderr?.trim() || "no output";
-    await broadcastAction(body.action, "success", execNote.slice(0, 300));
+    const wasHostRun = !process.env.VERCEL;
+    await broadcastAction(body.action, wasHostRun ? "success" : "error", execNote.slice(0, 300));
     appendAutomationLog({
       id: `qa-${entry.id}-${Date.now()}`,
       summary: entry.label,
       channel: "Quick Action",
-      status: "OK",
+      status: wasHostRun ? "OK" : "HOST_ONLY",
       detail: execNote.slice(0, 120)
     });
+    if (!wasHostRun) {
+      return NextResponse.json({ ok: false, entry, error: "Quick Actions must run on the host (scripts/*.mjs)." }, { status: 400 });
+    }
     return NextResponse.json({ ok: true, entry, result: execResult?.stdout ?? "" });
   } catch (error) {
     console.error("Failed to record action", error);
