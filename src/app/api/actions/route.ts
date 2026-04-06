@@ -12,6 +12,7 @@ const projectRoot = process.cwd();
 const execAsync = promisify(execCallback);
 const missionLogDir = path.join(workspaceRoot, "logs", "mission-control");
 const scriptsDir = path.join(projectRoot, "scripts");
+const runningOnVercel = Boolean(process.env.VERCEL_URL || process.env.VERCEL);
 
 function buildEntry(id: string) {
   const definition = actions.find((action) => action.id === id);
@@ -33,7 +34,7 @@ const actionHandlers: Record<string, () => Promise<unknown>> = {
 };
 
 function appendAutomationLog(payload: Record<string, unknown>) {
-  if (process.env.VERCEL) return;
+  if (runningOnVercel) return;
   try {
     fs.mkdirSync(missionLogDir, { recursive: true });
     const timestamp = typeof payload.timestamp === "string" ? payload.timestamp : new Date().toISOString();
@@ -80,19 +81,19 @@ export async function POST(request: Request) {
     const handler = actionHandlers[body.action];
     let execResult: { stdout?: string; stderr?: string } | null = null;
     if (handler) {
-      if (fs.existsSync(scriptsDir)) {
+      if (!runningOnVercel && fs.existsSync(scriptsDir)) {
         execResult = (await handler()) as { stdout?: string; stderr?: string };
       } else {
         execResult = { stderr: "Host-only quick action" };
       }
     }
-    if (!process.env.VERCEL) {
+    if (!runningOnVercel) {
       fs.mkdirSync(logDir, { recursive: true });
       fs.appendFileSync(path.join(logDir, "actions.log"), `${JSON.stringify(entry)}\n`);
       fs.writeFileSync(path.join(logDir, `${entry.id}-last.json`), JSON.stringify(entry, null, 2));
     }
     const execNote = execResult?.stdout?.trim() || execResult?.stderr?.trim() || "no output";
-    const wasHostRun = !process.env.VERCEL;
+    const wasHostRun = !runningOnVercel;
     await broadcastAction(body.action, wasHostRun ? "success" : "error", execNote.slice(0, 300));
     appendAutomationLog({
       id: `qa-${entry.id}-${Date.now()}`,
