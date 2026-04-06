@@ -4,6 +4,8 @@ import { exec as execCallback } from "child_process";
 import { promisify } from "util";
 import { NextResponse } from "next/server";
 import actions from "../../../data/mission-control/actions.json";
+import { loadStatus } from "../../../lib/data";
+import type { StatusPayload } from "../../../types/mission-control";
 import { sendDiscordMessage } from "../../../lib/discord";
 
 const workspaceRoot = path.resolve(process.cwd(), "..");
@@ -84,7 +86,7 @@ export async function POST(request: Request) {
       if (!runningOnVercel && fs.existsSync(scriptsDir)) {
         execResult = (await handler()) as { stdout?: string; stderr?: string };
       } else {
-        execResult = { stderr: "Host-only quick action" };
+        execResult = await runServerlessAction(body.action);
       }
     }
     if (!runningOnVercel) {
@@ -93,15 +95,21 @@ export async function POST(request: Request) {
       fs.writeFileSync(path.join(logDir, `${entry.id}-last.json`), JSON.stringify(entry, null, 2));
     }
     const execNote = execResult?.stdout?.trim() || execResult?.stderr?.trim() || "no output";
-    const wasHostRun = !runningOnVercel;
+    const ranServerless = runningOnVercel && execResult?.stderr !== "Host-only quick action";
+    const wasHostRun = !runningOnVercel || ranServerless;
     await broadcastAction(body.action, wasHostRun ? "success" : "error", execNote.slice(0, 300));
-    appendAutomationLog({
-      id: `qa-${entry.id}-${Date.now()}`,
-      summary: entry.label,
-      channel: "Quick Action",
-      status: wasHostRun ? "OK" : "HOST_ONLY",
-      detail: execNote.slice(0, 120)
-    });
+    if (!runningOnVercel) {
+      appendAutomationLog({
+        id: `qa-${entry.id}-${Date.now()}`,
+        summary: entry.label,
+        channel: "Quick Action",
+        status: "OK",
+        detail: execNote.slice(0, 120)
+      });
+    }
+    if (ranServerless) {
+      return NextResponse.json({ ok: true, entry, result: execResult?.stdout ?? "" });
+    }
     if (!wasHostRun) {
       return NextResponse.json({ ok: false, entry, error: "Quick Actions must run on the host (scripts/*.mjs)." }, { status: 400 });
     }
@@ -110,5 +118,21 @@ export async function POST(request: Request) {
     console.error("Failed to record action", error);
     await broadcastAction("system-error", "error", String(error));
     return NextResponse.json({ ok: false, error: "Unable to record action" }, { status: 500 });
+  }
+}
+
+async function runServerlessAction(actionId: string) {
+  switch (actionId) {
+    case "system-health": {
+      const status = loadStatus() as StatusPayload;
+      const checks = status.__live?.systemHealth ?? [];
+      const summary = checks.length
+        ? checks.map((check) => `• ${check.label}: ${check.status ?? "UNKNOWN"} ${check.detail ?? ""}`).join("\n")
+        : "No telemetry available.";
+      await sendDiscordMessage("action-required", `**System Health (serverless)**\n${summary}`);
+      return { stdout: summary };
+    }
+    default:
+      return { stderr: "Host-only quick action" };
   }
 }
