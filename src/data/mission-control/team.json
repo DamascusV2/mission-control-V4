@@ -23,20 +23,20 @@
       "status": "mobile"
     },
     {
-      "id": "charlie",
-      "name": "Charlie",
-      "role": "Engineer sub-agent",
-      "location": "Mac Studio",
-      "focus": "Next.js tooling, infra",
-      "status": "standby"
+      "id": "vector",
+      "name": "Vector",
+      "role": "Build / Runtime orchestration",
+      "location": "Automation runner",
+      "focus": "Telemetry wiring, queue state, deploy drift",
+      "status": "building"
     },
     {
-      "id": "violet",
-      "name": "Violet",
-      "role": "Research + Intel",
-      "location": "Claude",
-      "focus": "Market scanning, voice",
-      "status": "offline"
+      "id": "sentinel",
+      "name": "Sentinel",
+      "role": "Observability / Security",
+      "location": "Ops NOC",
+      "focus": "Heartbeats, system health, alerts",
+      "status": "watch"
     }
   ]
 }
