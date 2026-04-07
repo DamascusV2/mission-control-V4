@@ -390,7 +390,13 @@ async function main() {
     .filter(Boolean)
     .map((item) => `• ${item.title} (${item.source ?? "Unknown"})`)
     .join("\n");
-  const discordMessage = `**Morning Brief · ${now.toLocaleDateString()}**\n${highlightLines || "• No major headlines"}\nMarkets → SPY ${stockDelta} | BTC ${cryptoDelta}\nArchive: ${briefFile}`;
+  const internalActive = telemetrySection.telemetry.active?.length ?? 0;
+  const internalBlocked = telemetrySection.telemetry.blocked?.length ?? 0;
+  const internalCompleted = telemetrySection.telemetry.completed?.length ?? 0;
+  const pendingList = telemetrySection.telemetry.idle?.slice?.(0, 3) ?? [];
+  const internalLine = `Internal → Active ${internalActive}, Blocked ${internalBlocked}, Completed ${internalCompleted}`;
+  const pendingLine = `Pending → ${pendingList.length ? pendingList.join(", ") : "None"}`;
+  const discordMessage = `**Morning Brief · ${now.toLocaleDateString()}**\n${highlightLines || "• No major headlines"}\nMarkets → SPY ${stockDelta} | BTC ${cryptoDelta}\n${internalLine}\n${pendingLine}\nArchive: ${briefFile}`;
   await postDailyIntel(discordMessage);
   logAutomation({
     id: `morning-brief-${now.toISOString()}`,
