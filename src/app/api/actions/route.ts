@@ -180,7 +180,7 @@ function buildMissionStatusSummary(
   const backlog: Task[] = taskColumns.find((col) => col.id === "backlog")?.tasks ?? [];
   const done: Task[] = taskColumns.find((col) => col.id === "done")?.tasks ?? [];
   const completed = done.slice(-3).map((task) => `${task.title} (${task.owner})`);
-  const deploymentsLog = (deployments.releases ?? []).slice(-2).map((release) => `${release.summary} (${release.status ?? "OK"})`);
+  const deploymentsLog = (deployments.releases ?? []).slice(-2).map((release) => `${release.summary} (${release.owner})`);
 
   const formatLine = (label: string, list: string[], fallback = "None") => `• ${label}: ${list.length ? list.join(", ") : fallback}`;
   const lines = [
